@@ -16,7 +16,7 @@ for(1 .. 10_0000) {
 
       # Close WebSocket after receiving one message
       $tx->on(message => sub ($tx, $msg) {
-          Mojo::Promise->timer(250)->then(sub { $tx->finish });
+         $tx->finish;
         });
 
       # Send a message to the server

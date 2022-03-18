@@ -9,7 +9,7 @@ websocket '/echo' => sub ($c) {
   $redis->db->incr('conn');
   $c->on(message => sub ($c, $msg) {
       $c->app->log->debug('Websocket opened');
-      $c->send("echo $msg");
+      Mojo::Promise->timer(250)->then(sub { $c->send("echo $msg"); });
   });
   $c->on(finish => sub($c, $code, $reason = undef) {
       $redis->db->decr('conn');
